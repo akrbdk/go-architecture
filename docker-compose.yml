@@ -1,0 +1,25 @@
+---
+
+services:
+  app:
+    image: go-architecture:local
+    container_name: go-architecture-app
+    depends_on:
+      - postgresql
+    networks:
+      - ps
+
+  postgresql:
+    image: postgres:14-alpine
+    container_name: go-architecture-psql
+    environment:
+      - POSTGRES_DB=goarchitecture
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    networks:
+      - ps
+
+networks:
+  ps:
