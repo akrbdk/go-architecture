@@ -6,12 +6,13 @@ WORKDIR /usr/local/src
 RUN apk --no-cache add bash git make gcc gettext musl-dev
 
 #dependencies
-COPY ["app/go.mod", "app/go.sum", "./"]
+COPY ["go.mod", "go.sum", "./"]
 RUN go mod download
 
 #build
-COPY app ./
-RUN go build -o ./bin/app cmd/main.go
+COPY cmd ./
+COPY internal ./internal
+RUN go build -o ./bin/app app/main.go
 
 FROM alpine AS runner
 
